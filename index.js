@@ -78,16 +78,25 @@ app.get('/admin/categorias', async(req, res ) =>{
     const db = await dbConnection
     const categorias = await db.all('select * from categorias;')
     res.render('admin/categorias', { categorias })
+
 })
 app.get('/admin/categorias/delete/:id', async(req, res) => { 
     const db = await dbConnection
     await db.run('delete from categorias where id = '+req.params.id+' ')
     res.redirect('/admin/categorias')
+
 })
 app.get('/admin/categorias/nova', async(req, res) => {
     const db = await dbConnection
     const categorias = await db.all('select * from categorias')
     res.render('admin/nova-categoria', { categorias })
+
+})
+app.post('/admin/categorias/nova',async(req, res) =>{
+    const { categoria } = req.body
+    const db = await dbConnection
+    await db.run(`insert into categorias(categoria) values('${categoria}')`)
+    res.redirect('/admin/categorias')
 })
 
 const init = async() => {
@@ -109,4 +118,5 @@ app.listen(port, (err) => {
     }else{
         console.log('Servidor do Jobfy  funcionando normalmente...')
         }
+    
 })
