@@ -30,7 +30,7 @@ app.get('/Vagas/:id', async(request, response) => {
     const db = await dbConnection
     const vaga = await db.get('select * from vagas where id ='+request.params.id)
     
-    response.render('Vagas',{
+    response.render('vagas',{
         vaga
     })
 }) 
