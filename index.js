@@ -98,6 +98,19 @@ app.post('/admin/categorias/nova',async(req, res) =>{
     await db.run(`insert into categorias(categoria) values('${categoria}')`)
     res.redirect('/admin/categorias')
 })
+app.get('/admin/categorias/editar/:id', async(req, res) => {
+    const db = await dbConnection
+    const categorias = await db.get('select * from categorias where id = '+req.params.id)
+    res.render('admin/editar-categorias', { categorias })
+})
+app.post('/admin/categorias/editar/:id',async(req, res) =>{
+    const { categoria } = req.body
+    const { id } = req.params
+    const db = await dbConnection
+    await db.run(`update categorias set categoria ='${descricao}' where id = ${id}`)
+    res.redirect('/admin/categorias')
+    
+})
 
 const init = async() => {
     const db = await dbConnection
